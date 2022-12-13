@@ -5,6 +5,7 @@ import {
   onUpdateEvent,
   onSetActiveEvent,
   RootState,
+  onDeleteEvent,
 } from "../store";
 import { CalendarEvent } from "../calendar/interfaces";
 
@@ -35,12 +36,19 @@ export const useCalendarStore = () => {
     }
   };
 
+  const startDeletingEvent = async () => {
+    //TODO: LLEGAR AL BACKEND
+    dispatch(onDeleteEvent());
+  };
+
   return {
     //* Properties
     events,
     activeEvent,
+    hasEventSelected: !!activeEvent && activeEvent._id,
     //*Methods
     setActiveEvent,
     startSavingEvent,
+    startDeletingEvent,
   };
 };
