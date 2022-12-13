@@ -4,6 +4,7 @@ import "./CalendarPage.scss";
 import { CalendarEvent, CalendarModal, Navbar } from "../..";
 import { localizer, getCalendarMessagesES } from "../../../helpers";
 import { useState } from "react";
+import { useUiStore } from "../../../hooks";
 
 const myEventsList = [
   {
@@ -21,6 +22,7 @@ const myEventsList = [
 ];
 
 export const CalendarPage = () => {
+  const { openDateModal } = useUiStore();
   const [lastView, setLastView] = useState<View>(
     localStorage.getItem("lastView")
       ? (localStorage.getItem("lastView") as View)
@@ -42,8 +44,8 @@ export const CalendarPage = () => {
     return { style };
   };
 
-  const onDoubleClick = (event: any) => {
-    console.log(event);
+  const onDoubleClick = () => {
+    openDateModal();
   };
 
   const onSelect = (event: any) => {

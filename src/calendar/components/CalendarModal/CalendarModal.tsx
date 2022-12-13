@@ -9,6 +9,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import "./CalendarModal.scss";
 import "react-datepicker/dist/react-datepicker.css";
 import { CalendarEvent } from "../../interfaces";
+import { useUiStore } from "../../../hooks";
 
 registerLocale("es", es);
 
@@ -33,7 +34,7 @@ const formData: CalendarEvent = {
 };
 
 export const CalendarModal = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const { isDateModalOpen, closeDateModal } = useUiStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formValues, setFormValues] = useState<CalendarEvent>(formData);
 
@@ -46,10 +47,19 @@ export const CalendarModal = () => {
     return formValues.title.length > 0 ? "is-valid" : "is-invalid";
   }, [formValues.title, formSubmitted]);
 
+  /**
+   * It closes the modal
+   */
   const onCloseModal = () => {
-    setIsOpen(false);
+    closeDateModal();
   };
 
+  /**
+   * We're using the spread operator to copy the existing formValues object, and then we're using the
+   * computed property syntax to set the value of the property that matches the name of the input that
+   * was changed
+   * @param  - {
+   */
   const onInputChange = ({
     target,
   }: {
@@ -76,9 +86,16 @@ export const CalendarModal = () => {
 
     if (formValues.title.length <= 0) return;
 
-    //TODO: cerrar modal, restablecer formulario
+    onCloseModal();
+    setFormSubmitted(false);
+    setFormValues(formData);
   };
 
+  /**
+   * OnDateChange is a function that takes a date and a string, and set the date in formState wheh date * changes.
+   * @param {Date} date - The date that was selected
+   * @param {"start" | "end"} changing - "start" | "end"
+   */
   const onDateChange = (date: Date, changing: "start" | "end") => {
     setFormValues({
       ...formValues,
@@ -88,7 +105,7 @@ export const CalendarModal = () => {
 
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={isDateModalOpen}
       onRequestClose={onCloseModal}
       style={customStyles}
       contentLabel="Example Modal"
