@@ -4,6 +4,7 @@ import { CalendarEvent } from "../../calendar/interfaces";
 import { addHours } from "date-fns";
 
 const tempEvent = {
+  _id: new Date().getTime().toString(),
   title: "Cumpleaños",
   notes:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in",
@@ -29,8 +30,12 @@ const initialState: CalendarState = {
 export const calendarSlice = createSlice({
   name: "calendar",
   initialState,
-  reducers: {},
+  reducers: {
+    onSetActiveEvent: (state, { payload }: PayloadAction<CalendarEvent>) => {
+      state.activeEvent = payload;
+    },
+  },
 });
 
 // Action creators are generated for each case reducer function
-//export const { increment } = calendarSlice.actions;
+export const { onSetActiveEvent } = calendarSlice.actions;
