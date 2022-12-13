@@ -36,7 +36,7 @@ const formData: CalendarEvent = {
 
 export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
-  const { activeEvent } = useCalendarStore();
+  const { activeEvent, startSavingEvent } = useCalendarStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formValues, setFormValues] = useState<CalendarEvent>(formData);
 
@@ -77,7 +77,7 @@ export const CalendarModal = () => {
     });
   };
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormSubmitted(true);
     const difference = differenceInSeconds(formValues.end, formValues.start);
@@ -91,10 +91,9 @@ export const CalendarModal = () => {
     }
 
     if (formValues.title.length <= 0) return;
-
-    onCloseModal();
+    await startSavingEvent(formValues);
+    closeDateModal();
     setFormSubmitted(false);
-    setFormValues(formData);
   };
 
   /**
@@ -119,7 +118,7 @@ export const CalendarModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      <h1> Nuevo evento </h1>
+      <h1> {activeEvent?._id ? "Editar" : "Nuevo"} evento </h1>
       <hr />
       <form onSubmit={onSubmit} className="container">
         <div className="form-group mb-2">

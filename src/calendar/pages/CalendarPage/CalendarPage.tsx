@@ -1,9 +1,8 @@
-import { Calendar, Event, View } from "react-big-calendar";
-import { addHours } from "date-fns";
-import "./CalendarPage.scss";
-import { CalendarEvent, CalendarModal, Navbar } from "../..";
-import { localizer, getCalendarMessagesES } from "../../../helpers";
 import { useState } from "react";
+import { Calendar, Event, View } from "react-big-calendar";
+import "./CalendarPage.scss";
+import { CalendarEvent, CalendarModal, FabAddNew, Navbar } from "../..";
+import { localizer, getCalendarMessagesES } from "../../../helpers";
 import { useCalendarStore, useUiStore } from "../../../hooks";
 
 export const CalendarPage = () => {
@@ -64,6 +63,7 @@ export const CalendarPage = () => {
         onView={onViewChanged}
       />
       <CalendarModal />
+      <FabAddNew />
     </>
   );
 };
