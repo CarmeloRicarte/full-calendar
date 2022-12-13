@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Modal from "react-modal";
-import { addHours } from "date-fns";
+import { addHours, differenceInSeconds } from "date-fns";
 import DatePicker, { registerLocale } from "react-datepicker";
 import es from "date-fns/locale/es";
+import Swal from "sweetalert2";
+import "sweetalert2/dist/sweetalert2.min.css";
 
 import "./CalendarModal.scss";
 import "react-datepicker/dist/react-datepicker.css";
@@ -32,7 +34,17 @@ const formData: CalendarEvent = {
 
 export const CalendarModal = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [formValues, setFormValues] = useState<CalendarEvent>(formData);
+
+  /* get the class for title input */
+  const titleClass = useMemo(() => {
+    if (!formSubmitted) {
+      return "";
+    }
+
+    return formValues.title.length > 0 ? "is-valid" : "is-invalid";
+  }, [formValues.title, formSubmitted]);
 
   const onCloseModal = () => {
     setIsOpen(false);
@@ -47,6 +59,24 @@ export const CalendarModal = () => {
       ...formValues,
       [target.name]: target.value,
     });
+  };
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormSubmitted(true);
+    const difference = differenceInSeconds(formValues.end, formValues.start);
+    if (isNaN(difference) || difference <= 0) {
+      Swal.fire(
+        "Fechas incorrectas",
+        "Revise las fechas introducidas",
+        "error"
+      );
+      return;
+    }
+
+    if (formValues.title.length <= 0) return;
+
+    //TODO: cerrar modal, restablecer formulario
   };
 
   const onDateChange = (date: Date, changing: "start" | "end") => {
@@ -68,7 +98,7 @@ export const CalendarModal = () => {
     >
       <h1> Nuevo evento </h1>
       <hr />
-      <form className="container">
+      <form onSubmit={onSubmit} className="container">
         <div className="form-group mb-2">
           <label>Fecha y hora inicio</label>
           <DatePicker
@@ -101,7 +131,7 @@ export const CalendarModal = () => {
           <label>Titulo y notas</label>
           <input
             type="text"
-            className="form-control"
+            className={`form-control ${titleClass}`}
             placeholder="Título del evento"
             name="title"
             autoComplete="off"
