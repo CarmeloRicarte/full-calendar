@@ -28,8 +28,7 @@ export const useAuthStore = () => {
         email,
         password,
       });
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("token-init-date", new Date().getTime().toString());
+      setTokenLocalStorage(data.token);
 
       dispatch(
         onLogin({
@@ -61,8 +60,7 @@ export const useAuthStore = () => {
         email,
         password,
       });
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("token-init-date", new Date().getTime().toString());
+      setTokenLocalStorage(data.token);
 
       dispatch(
         onLogin({
@@ -85,20 +83,33 @@ export const useAuthStore = () => {
     }
   };
 
+  const setTokenLocalStorage = (token: string) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem(
+      "token-expires-date",
+      new Date().getTime() + 2 * 60 * 60 * 1000 + ""
+    );
+  };
+
   const checkAuthToken = async () => {
     const token = localStorage.getItem("token");
     if (!token) return dispatch(onLogout());
     try {
       const { data } = await calendarApi.get("/auth/renew");
-      localStorage.setItem("token", data.token);
-      localStorage.setItem("token-init-date", new Date().getTime().toString());
 
-      dispatch(
-        onLogin({
-          name: data.name,
-          uid: data.uid,
-        })
-      );
+      // logout user if token expired
+      const expirationTokenDate = localStorage.getItem("token-expires-date");
+      if (expirationTokenDate && +expirationTokenDate < new Date().getTime()) {
+        dispatch(onLogout());
+      } else {
+        setTokenLocalStorage(data);
+        dispatch(
+          onLogin({
+            name: data.name,
+            uid: data.uid,
+          })
+        );
+      }
     } catch (error) {
       localStorage.clear();
       dispatch(onLogout());
