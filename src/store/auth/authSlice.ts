@@ -9,8 +9,7 @@ export enum AUTH_STATUS {
 
 export interface User {
   name: string;
-  email: string;
-  password: string;
+  uid: string;
 }
 
 export interface AuthState {
@@ -23,8 +22,7 @@ const initialState: AuthState = {
   status: AUTH_STATUS.CHECKING,
   user: {
     name: "",
-    email: "",
-    password: "",
+    uid: "",
   },
   errorMessage: undefined,
 };
@@ -37,8 +35,7 @@ export const authSlice = createSlice({
       state.status = AUTH_STATUS.CHECKING;
       state.user = {
         name: "",
-        email: "",
-        password: "",
+        uid: "",
       };
       state.errorMessage = undefined;
     },
@@ -47,8 +44,17 @@ export const authSlice = createSlice({
       state.user = payload;
       state.errorMessage = undefined;
     },
+    onLogout: (state, { payload }: PayloadAction<string | undefined>) => {
+      state.status = AUTH_STATUS.NOT_AUTHENTICATED;
+      state.user = initialState.user;
+      state.errorMessage = payload;
+    },
+    clearErrorMessage: (state) => {
+      state.errorMessage = undefined;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { onChecking, onLogin } = authSlice.actions;
+export const { onChecking, onLogin, onLogout, clearErrorMessage } =
+  authSlice.actions;
