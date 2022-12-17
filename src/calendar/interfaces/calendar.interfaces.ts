@@ -1,5 +1,5 @@
 import { Event } from "react-big-calendar";
-export interface CalendarEvent extends Event {
+export interface ICalendarEvent extends Event {
   title: string;
   notes: string;
   start: Date;
@@ -12,7 +12,7 @@ export interface CalendarEvent extends Event {
   };
 }
 
-export interface CalendarEventFromDB {
+export interface ICalendarEventFromDB {
   title: string;
   notes: string;
   start: string;

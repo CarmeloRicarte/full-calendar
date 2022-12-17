@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { CalendarEvent } from "../../calendar/interfaces";
+import { ICalendarEvent } from "../../calendar/interfaces";
 import { addHours } from "date-fns";
 
 export interface CalendarState {
   isLoadingEvents: boolean;
-  events: CalendarEvent[];
-  activeEvent: CalendarEvent | null;
+  events: ICalendarEvent[];
+  activeEvent: ICalendarEvent | null;
 }
 
 const initialState: CalendarState = {
@@ -19,14 +19,14 @@ export const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
-    onSetActiveEvent: (state, { payload }: PayloadAction<CalendarEvent>) => {
+    onSetActiveEvent: (state, { payload }: PayloadAction<ICalendarEvent>) => {
       state.activeEvent = payload;
     },
-    onAddNewEvent: (state, { payload }: PayloadAction<CalendarEvent>) => {
+    onAddNewEvent: (state, { payload }: PayloadAction<ICalendarEvent>) => {
       state.events.push(payload);
       state.activeEvent = null;
     },
-    onUpdateEvent: (state, { payload }: PayloadAction<CalendarEvent>) => {
+    onUpdateEvent: (state, { payload }: PayloadAction<ICalendarEvent>) => {
       const eventToUpdate = state.events.find(
         (event) => event.id === payload.id
       );
@@ -42,7 +42,7 @@ export const calendarSlice = createSlice({
         state.activeEvent = null;
       }
     },
-    onLoadEvents: (state, { payload }: PayloadAction<CalendarEvent[]>) => {
+    onLoadEvents: (state, { payload }: PayloadAction<ICalendarEvent[]>) => {
       state.isLoadingEvents = false;
       payload.forEach((event) => {
         const exists = state.events.some((dbEvent) => dbEvent.id === event.id);

@@ -8,7 +8,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 import "./CalendarModal.scss";
 import "react-datepicker/dist/react-datepicker.css";
-import { CalendarEvent } from "../../interfaces";
+import { ICalendarEvent } from "../../interfaces";
 import { useCalendarStore, useUiStore } from "../../../hooks";
 
 registerLocale("es", es);
@@ -26,7 +26,7 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-const formData: CalendarEvent = {
+const formData: ICalendarEvent = {
   id: new Date().getTime().toString(),
   title: "",
   notes: "",
@@ -38,7 +38,7 @@ export const CalendarModal = () => {
   const { isDateModalOpen, closeDateModal } = useUiStore();
   const { activeEvent, startSavingEvent } = useCalendarStore();
   const [formSubmitted, setFormSubmitted] = useState(false);
-  const [formValues, setFormValues] = useState<CalendarEvent>(formData);
+  const [formValues, setFormValues] = useState<ICalendarEvent>(formData);
 
   /* get the class for title input */
   const titleClass = useMemo(() => {

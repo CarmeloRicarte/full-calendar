@@ -1,9 +1,9 @@
 import { parseISO } from "date-fns";
-import { CalendarEvent, CalendarEventFromDB } from "../calendar/interfaces";
+import { ICalendarEvent, ICalendarEventFromDB } from "../calendar/interfaces";
 
 export const convertEventsToDateEvents = (
-  events: CalendarEventFromDB[]
-): CalendarEvent[] => {
+  events: ICalendarEventFromDB[]
+): ICalendarEvent[] => {
   const eventsMapped = events.map((event) => {
     return {
       ...event,

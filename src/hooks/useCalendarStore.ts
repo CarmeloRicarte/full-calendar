@@ -10,7 +10,7 @@ import {
   onDeleteEvent,
   onLoadEvents,
 } from "../store";
-import { CalendarEvent } from "../calendar/interfaces";
+import { ICalendarEvent } from "../calendar/interfaces";
 import { calendarApi } from "../api";
 import { convertEventsToDateEvents } from "../helpers";
 
@@ -21,11 +21,11 @@ export const useCalendarStore = () => {
   );
   const { user } = useSelector((state: RootState) => state.auth);
 
-  const setActiveEvent = (calendarEvent: CalendarEvent) => {
+  const setActiveEvent = (calendarEvent: ICalendarEvent) => {
     dispatch(onSetActiveEvent(calendarEvent));
   };
 
-  const startSavingEvent = async (calendarEvent: CalendarEvent) => {
+  const startSavingEvent = async (calendarEvent: ICalendarEvent) => {
     try {
       if (calendarEvent.id) {
         // updating
