@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Calendar, Event, View } from "react-big-calendar";
+import { Calendar, View } from "react-big-calendar";
 import "./CalendarPage.scss";
 import {
   CalendarEvent,
@@ -9,9 +9,11 @@ import {
   Navbar,
 } from "../..";
 import { localizer, getCalendarMessagesES } from "../../../helpers";
-import { useCalendarStore, useUiStore } from "../../../hooks";
+import { useAuthStore, useCalendarStore, useUiStore } from "../../../hooks";
+import { ICalendarEvent } from "../../interfaces";
 
 export const CalendarPage = () => {
+  const { user } = useAuthStore();
   const { openDateModal } = useUiStore();
   const { events, setActiveEvent, startLoadingEvents } = useCalendarStore();
   const [lastView, setLastView] = useState<View>(
@@ -20,14 +22,10 @@ export const CalendarPage = () => {
       : "week"
   );
 
-  const eventStyleGetter = (
-    event: Event,
-    start: Date,
-    end: Date,
-    isSelected: boolean
-  ) => {
+  const eventStyleGetter = (event: ICalendarEvent) => {
+    const isMyEvent = user.uid === event.user?._id;
     const style = {
-      backgroundColor: "#347CF7",
+      backgroundColor: isMyEvent ? "#347CF7" : "rgba(247,133,5,1)",
       borderRadius: "0px",
       opacity: 0.8,
       color: "white",
