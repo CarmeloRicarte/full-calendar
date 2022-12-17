@@ -8,12 +8,14 @@ import {
   onDeleteEvent,
 } from "../store";
 import { CalendarEvent } from "../calendar/interfaces";
+import { calendarApi } from "../api";
 
 export const useCalendarStore = () => {
   const dispatch = useAppDispatch();
   const { events, activeEvent } = useSelector(
     (state: RootState) => state.calendar
   );
+  const { user } = useSelector((state: RootState) => state.auth);
 
   const setActiveEvent = (calendarEvent: CalendarEvent) => {
     dispatch(onSetActiveEvent(calendarEvent));
@@ -22,14 +24,19 @@ export const useCalendarStore = () => {
   const startSavingEvent = async (calendarEvent: CalendarEvent) => {
     //TODO: LLEGAR AL BACKEND
 
-    if (calendarEvent._id) {
+    if (calendarEvent.id) {
       dispatch(onUpdateEvent({ ...calendarEvent }));
     } else {
       // creating
+      const { data } = await calendarApi.post("/events", calendarEvent);
       dispatch(
         onAddNewEvent({
           ...calendarEvent,
-          _id: new Date().getTime().toString(),
+          id: data.event.id,
+          user: {
+            name: user.name,
+            _id: user.uid,
+          },
           bgColor: "#fafafa",
         })
       );
@@ -45,7 +52,7 @@ export const useCalendarStore = () => {
     //* Properties
     events,
     activeEvent,
-    hasEventSelected: !!activeEvent && activeEvent._id,
+    hasEventSelected: !!activeEvent && activeEvent.id,
     //*Methods
     setActiveEvent,
     startSavingEvent,
