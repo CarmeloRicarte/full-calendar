@@ -36,10 +36,13 @@ export const calendarSlice = createSlice({
     },
     onDeleteEvent: (state) => {
       if (state.activeEvent) {
-        state.events = state.events.filter((event) => {
-          event.id !== state.activeEvent?.id;
-        });
-        state.activeEvent = null;
+        const eventFound = state.events.find(
+          (storeEvent) => storeEvent.id === state.activeEvent?.id
+        );
+        if (eventFound) {
+          state.events.splice(state.events.indexOf(eventFound), 1);
+          state.activeEvent = null;
+        }
       }
     },
     onLoadEvents: (state, { payload }: PayloadAction<ICalendarEvent[]>) => {
