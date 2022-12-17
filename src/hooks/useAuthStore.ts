@@ -102,7 +102,7 @@ export const useAuthStore = () => {
       if (expirationTokenDate && +expirationTokenDate < new Date().getTime()) {
         dispatch(onLogout());
       } else {
-        setTokenLocalStorage(data);
+        setTokenLocalStorage(data.token);
         dispatch(
           onLogin({
             name: data.name,
