@@ -4,7 +4,7 @@ import { CalendarEvent } from "../../calendar/interfaces";
 import { addHours } from "date-fns";
 
 const tempEvent = {
-  _id: new Date().getTime().toString(),
+  id: new Date().getTime().toString(),
   title: "Cumpleaños",
   notes:
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in",
@@ -40,7 +40,7 @@ export const calendarSlice = createSlice({
     },
     onUpdateEvent: (state, { payload }: PayloadAction<CalendarEvent>) => {
       const eventToUpdate = state.events.find(
-        (event) => event._id === payload._id
+        (event) => event.id === payload.id
       );
       if (eventToUpdate) {
         Object.assign(eventToUpdate, payload);
@@ -49,7 +49,7 @@ export const calendarSlice = createSlice({
     onDeleteEvent: (state) => {
       if (state.activeEvent) {
         state.events = state.events.filter((event) => {
-          event._id !== state.activeEvent?._id;
+          event.id !== state.activeEvent?.id;
         });
         state.activeEvent = null;
       }

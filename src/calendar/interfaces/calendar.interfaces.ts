@@ -4,7 +4,7 @@ export interface CalendarEvent extends Event {
   notes: string;
   start: Date;
   end: Date;
-  _id?: string;
+  id?: string;
   bgColor?: string;
   user?: {
     _id: string;

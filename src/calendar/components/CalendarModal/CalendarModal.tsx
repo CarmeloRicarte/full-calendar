@@ -27,7 +27,7 @@ const customStyles = {
 Modal.setAppElement("#root");
 
 const formData: CalendarEvent = {
-  _id: new Date().getTime().toString(),
+  id: new Date().getTime().toString(),
   title: "",
   notes: "",
   start: new Date(),
@@ -118,7 +118,7 @@ export const CalendarModal = () => {
       overlayClassName="modal-fondo"
       closeTimeoutMS={200}
     >
-      <h1> {activeEvent?._id ? "Editar" : "Nuevo"} evento </h1>
+      <h1> {activeEvent?.id ? "Editar" : "Nuevo"} evento </h1>
       <hr />
       <form onSubmit={onSubmit} className="container">
         <div className="form-group mb-2">
