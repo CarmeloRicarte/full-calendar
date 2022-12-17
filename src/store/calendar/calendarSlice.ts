@@ -3,27 +3,15 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import { CalendarEvent } from "../../calendar/interfaces";
 import { addHours } from "date-fns";
 
-const tempEvent = {
-  id: new Date().getTime().toString(),
-  title: "Cumpleaños",
-  notes:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor in",
-  start: new Date(),
-  end: addHours(new Date(), 2),
-  bgColor: "#fafafa",
-  user: {
-    _id: "123",
-    name: "Carmelo",
-  },
-};
-
 export interface CalendarState {
+  isLoadingEvents: boolean;
   events: CalendarEvent[];
   activeEvent: CalendarEvent | null;
 }
 
 const initialState: CalendarState = {
-  events: [tempEvent],
+  isLoadingEvents: true,
+  events: [],
   activeEvent: null,
 };
 
@@ -54,9 +42,24 @@ export const calendarSlice = createSlice({
         state.activeEvent = null;
       }
     },
+    onLoadEvents: (state, { payload }: PayloadAction<CalendarEvent[]>) => {
+      state.isLoadingEvents = false;
+      payload.forEach((event) => {
+        const exists = state.events.some((dbEvent) => dbEvent.id === event.id);
+        if (!exists) {
+          state.events.push(event);
+        }
+      });
+      state.activeEvent = null;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { onSetActiveEvent, onAddNewEvent, onUpdateEvent, onDeleteEvent } =
-  calendarSlice.actions;
+export const {
+  onSetActiveEvent,
+  onAddNewEvent,
+  onUpdateEvent,
+  onDeleteEvent,
+  onLoadEvents,
+} = calendarSlice.actions;

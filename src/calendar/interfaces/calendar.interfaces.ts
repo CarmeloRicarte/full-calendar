@@ -11,3 +11,16 @@ export interface CalendarEvent extends Event {
     name: string;
   };
 }
+
+export interface CalendarEventFromDB {
+  title: string;
+  notes: string;
+  start: string;
+  end: string;
+  id: string;
+  bgColor?: string;
+  user?: {
+    _id: string;
+    name: string;
+  };
+}
