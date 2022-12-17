@@ -5,6 +5,7 @@ import {
   onChecking,
   onLogin,
   onLogout,
+  onLogoutCalendar,
   RootState,
 } from "../store";
 import { useAppDispatch } from "./dispatchSelector";
@@ -119,6 +120,7 @@ export const useAuthStore = () => {
   const startLogout = () => {
     localStorage.clear();
     dispatch(onLogout());
+    dispatch(onLogoutCalendar());
   };
 
   return {
