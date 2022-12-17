@@ -1,5 +1,7 @@
 import { useAppDispatch } from "./dispatchSelector";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+
 import {
   onAddNewEvent,
   onUpdateEvent,
@@ -24,11 +26,22 @@ export const useCalendarStore = () => {
   };
 
   const startSavingEvent = async (calendarEvent: CalendarEvent) => {
-    //TODO: LLEGAR AL BACKEND
+    try {
+      if (calendarEvent.id) {
+        // updating
+        await calendarApi.put(`/events/${calendarEvent.id}`, calendarEvent);
 
-    if (calendarEvent.id) {
-      dispatch(onUpdateEvent({ ...calendarEvent }));
-    } else {
+        dispatch(
+          onUpdateEvent({
+            ...calendarEvent,
+            user: {
+              name: user.name,
+              _id: user.uid,
+            },
+          })
+        );
+        return;
+      }
       // creating
       const { data } = await calendarApi.post("/events", calendarEvent);
       dispatch(
@@ -42,6 +55,8 @@ export const useCalendarStore = () => {
           bgColor: "#fafafa",
         })
       );
+    } catch (error: any) {
+      Swal.fire("Error al guardar", error.response.data?.msg, "error");
     }
   };
 
