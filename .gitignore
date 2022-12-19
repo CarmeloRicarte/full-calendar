@@ -24,6 +24,7 @@ dist-ssr
 *.sw?
 
 # project files
+coverage
 .env
 .env.production
 .env.test
