@@ -26,3 +26,4 @@ dist-ssr
 # project files
 .env
 .env.production
+.env.test
