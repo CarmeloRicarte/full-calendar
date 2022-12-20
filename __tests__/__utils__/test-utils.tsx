@@ -17,7 +17,14 @@ export const renderStoreHookWithProviders = (
     // create a store instance
     store = mockStore,
   }: ExtendedRenderOptions = {}
-): { store: AppStore; result: { current: {} } } => {
+): {
+  store: AppStore;
+  result: {
+    current: {
+      [key: string]: any;
+    };
+  };
+} => {
   const Wrapper = ({
     children,
   }: PropsWithChildren<Record<string, unknown>>): JSX.Element => (
