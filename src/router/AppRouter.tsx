@@ -14,7 +14,6 @@ export const AppRouter = () => {
 
   if (status === AUTH_STATUS.CHECKING) {
     return <h3>Loading...</h3>;
-  } else {
   }
 
   return (
