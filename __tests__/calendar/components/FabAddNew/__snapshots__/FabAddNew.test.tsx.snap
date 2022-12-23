@@ -1,0 +1,13 @@
+// Vitest Snapshot v1
+
+exports[`Tests of <FabAddNew /> > should render button 1`] = `
+<div>
+  <button
+    class="btn btn-primary fab"
+  >
+    <i
+      class="fas fa-plus"
+    />
+  </button>
+</div>
+`;
