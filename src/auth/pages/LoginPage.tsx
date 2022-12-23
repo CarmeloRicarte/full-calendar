@@ -66,6 +66,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="text"
+                data-testid="login-email-input"
                 className="form-control"
                 placeholder="Correo"
                 name="loginEmail"
@@ -76,6 +77,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="password"
+                data-testid="login-password-input"
                 className="form-control"
                 placeholder="Contraseña"
                 name="loginPassword"
@@ -95,6 +97,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="text"
+                data-testid="register-name-input"
                 className="form-control"
                 placeholder="Nombre"
                 name="registerName"
@@ -105,6 +108,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="email"
+                data-testid="register-email-input"
                 className="form-control"
                 placeholder="Correo"
                 name="registerEmail"
@@ -115,6 +119,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="password"
+                data-testid="register-password-input"
                 className="form-control"
                 placeholder="Contraseña"
                 name="registerPassword"
@@ -126,6 +131,7 @@ export const LoginPage = () => {
             <div className="form-group mb-2">
               <input
                 type="password"
+                data-testid="register-password2-input"
                 className="form-control"
                 placeholder="Repita la contraseña"
                 name="registerPassword2"
