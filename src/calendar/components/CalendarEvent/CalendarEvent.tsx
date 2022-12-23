@@ -5,7 +5,7 @@ export const CalendarEvent = ({ event }: EventProps<any>) => {
   return (
     <>
       <strong>{title}</strong>
-      <span> - {user?.name}</span>
+      <span data-testid="username-nav"> - {user?.name}</span>
     </>
   );
 };
