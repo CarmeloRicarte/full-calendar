@@ -1,0 +1,30 @@
+// Vitest Snapshot v1
+
+exports[`Tests of <Navbar /> > should render correctly showing the user name 1`] = `
+<div>
+  <div
+    class="navbar navbar-dark bg-dark mb-4 px-4"
+  >
+    <span
+      class="navbar-brand"
+    >
+      <i
+        class="fas fa-calendar-alt"
+      />
+        
+      Test User
+    </span>
+    <button
+      class="btn btn-outline-danger"
+      type="button"
+    >
+      <i
+        class="fas fa-sign-out-alt"
+      />
+      <span>
+        Salir
+      </span>
+    </button>
+  </div>
+</div>
+`;
