@@ -1,10 +1,10 @@
 import { describe, test, expect, vi, beforeEach } from "vitest";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
-import { FabDelete } from "../../../src/calendar/components/FabDelete/FabDelete";
-import * as useCalendarStore from "../../../src/hooks/useCalendarStore";
+import { FabDelete } from "../../../../src/calendar/components/FabDelete/FabDelete";
+import * as useCalendarStore from "../../../../src/hooks/useCalendarStore";
 
-vi.mock("../../../src/hooks/useCalendarStore");
+vi.mock("../../../../src/hooks/useCalendarStore");
 
 describe("Tests of <FabDelete />", () => {
   const mockStartDeletingEvent = vi.fn();
