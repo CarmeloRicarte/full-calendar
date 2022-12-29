@@ -20,7 +20,6 @@ describe("Tests of <CalendarEvent />", () => {
       slotEnd: new Date("24-12-2022"),
     };
     render(<CalendarEvent {...props} />);
-    screen.debug();
     expect(screen.getByText("Cumpleaños")).toBeTruthy();
     expect(screen.getByTestId("username-nav").textContent).toContain("Carmelo");
   });
